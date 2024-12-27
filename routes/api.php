@@ -12,7 +12,7 @@ Route::post('/login', [AuthController::class, 'login']);
 Route::post('/forgot-password', [PasswordResetController::class, 'forgotPassword']);
 Route::post('/reset-password', [PasswordResetController::class, 'resetPassword']);
 
-Route::middleware('auth:sanctum')->group(function () {
+Route::middleware(['auth:sanctum', 'throttle:30,1'])->group(function () {
     Route::get('/articles', [ArticleController::class, 'index']);
     Route::get('/articles/personalized', [ArticleController::class, 'personalizedFeed']);
     Route::get('/articles/{id}', [ArticleController::class, 'show']);

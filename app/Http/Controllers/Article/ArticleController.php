@@ -28,7 +28,8 @@ class ArticleController extends Controller
      */
     public function index(ArticleSearchRequest $request): AnonymousResourceCollection
     {
-        $cacheKey = $this->generateCacheKey($request->validated());
+        $page = $request->get('page', 1);
+        $cacheKey = $this->generateCacheKey(array_merge($request->validated(), ['page' => $page]));
 
         $articles = Cache::remember(
             $cacheKey,
