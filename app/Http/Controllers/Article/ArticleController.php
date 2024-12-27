@@ -8,8 +8,10 @@ use App\Http\Resources\ArticleResource;
 use App\Models\Article;
 use App\Services\ArticleService;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Redis;
 use Symfony\Component\HttpFoundation\Response;
 
 class ArticleController extends Controller
@@ -35,6 +37,27 @@ class ArticleController extends Controller
         );
 
         return ArticleResource::collection($articles);
+    }
+
+    /**
+     * Get personalized feed for authenticated user
+     */
+    public function personalizedFeed(Request $request): JsonResponse|AnonymousResourceCollection
+    {
+        $cacheKey = "personalized_feed_user_{$request->user()->id}";
+
+        //        Redis::flushall();
+
+        $result = Cache::remember(
+            $cacheKey,
+            config('cache.article_ttl', now()->addDays(10)),
+            fn () => $this->articleService->getPersonalizedFeed($request->user()->id)
+        );
+        if (is_array($result)) {
+            return response()->json($result, $result['status']);
+        }
+
+        return ArticleResource::collection($result);
     }
 
     /**
