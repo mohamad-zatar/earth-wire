@@ -20,22 +20,22 @@ class FetchArticles extends Command
         $guardianCount = $this->fetchFromGuardian();
         $nytCount = $this->fetchFromNYT();
 
+        $this->info("Articles imported: NewsAPI - $newsAPICount, The Guardian - $guardianCount, New York Times - $nytCount");
+
+        $this->info('Articles fetched successfully.');
+
         Log::info('Article Import Summary', [
             'NewsAPI' => $newsAPICount,
             'The Guardian' => $guardianCount,
             'New York Times' => $nytCount,
         ]);
-
-        $this->info("Articles imported: NewsAPI - $newsAPICount, The Guardian - $guardianCount, New York Times - $nytCount");
-
-        $this->info('Articles fetched successfully.');
     }
 
     private function fetchFromNewsAPI(): int
     {
         $count = 0;
         $response = Http::get('https://newsapi.org/v2/top-headlines', [
-            'apiKey' => env('NEWS_API_KEY'),
+            'apiKey' => config('news_sources.news_api_key'),
             'category' => 'technology',
             'country' => 'us',
         ]);
@@ -65,7 +65,7 @@ class FetchArticles extends Command
     {
         $count = 0;
         $response = Http::get('https://content.guardianapis.com/search', [
-            'api-key' => env('GUARDIAN_API_KEY'),
+            'api-key' => config('news_sources.guardian_api_key'),
             'section' => 'technology',
         ]);
 
@@ -93,7 +93,7 @@ class FetchArticles extends Command
     {
         $count = 0;
         $response = Http::get('https://api.nytimes.com/svc/topstories/v2/technology.json', [
-            'api-key' => env('NYT_API_KEY'),
+            'api-key' => config('news_sources.nyt_api_key'),
         ]);
 
         if ($response->successful()) {
