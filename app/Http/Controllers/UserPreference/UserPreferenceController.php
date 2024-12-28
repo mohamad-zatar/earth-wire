@@ -5,6 +5,8 @@ namespace App\Http\Controllers\UserPreference;
 use App\Http\Controllers\Controller;
 use App\Models\UserPreference;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
+
 /**
  * @group User Preferences
  * APIs for managing user preferences.
@@ -65,6 +67,9 @@ class UserPreferenceController extends Controller
             ['user_id' => $request->user()->id],
             $validated
         );
+
+        $cacheKey = "personalized_feed_user_{$request->user()->id}";
+        Cache::forget($cacheKey);
 
         return response()->json(['message' => 'Preferences saved successfully.', 'data' => $preference]);
     }

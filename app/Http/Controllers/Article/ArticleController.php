@@ -51,7 +51,7 @@ class ArticleController extends Controller
 
         $articles = Cache::remember(
             $cacheKey,
-            config('cache.article_ttl', now()->addDays(10)),
+            config('cache.article_ttl', now()->addMinutes(10)),
             fn () => $this->articleService->getFilteredArticles($request->validated())
         );
 
@@ -70,11 +70,10 @@ class ArticleController extends Controller
     {
         $cacheKey = "personalized_feed_user_{$request->user()->id}";
 
-        //        Redis::flushall();
 
         $result = Cache::remember(
             $cacheKey,
-            config('cache.article_ttl', now()->addDays(10)),
+            config('cache.article_ttl', now()->addMinutes(10)),
             fn () => $this->articleService->getPersonalizedFeed($request->user()->id)
         );
         if (is_array($result)) {
@@ -98,7 +97,7 @@ class ArticleController extends Controller
 
             $article = Cache::remember(
                 $cacheKey,
-                config('cache.article_ttl', now()->addDays(10)),
+                config('cache.article_ttl', now()->addMinutes(10)),
                 fn () => $this->articleService->findArticle($id)
             );
 

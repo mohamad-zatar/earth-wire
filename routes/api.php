@@ -12,9 +12,6 @@ Route::post('/login', [AuthController::class, 'login']);
 Route::post('/forgot-password', [PasswordResetController::class, 'forgotPassword']);
 Route::post('/reset-password', [PasswordResetController::class, 'resetPassword']);
 
-Route::get('/articles', [ArticleController::class, 'index']);
-Route::get('/articles/{id}', [ArticleController::class, 'show']);
-
 Route::middleware(['auth:sanctum', 'throttle:30,1'])->group(function () {
     Route::get('/articles/personalized', [ArticleController::class, 'personalizedFeed']);
 
@@ -23,3 +20,6 @@ Route::middleware(['auth:sanctum', 'throttle:30,1'])->group(function () {
 
     Route::post('/logout', [AuthController::class, 'logout']);
 });
+
+Route::get('/articles', [ArticleController::class, 'index']);
+Route::get('/articles/{id}', [ArticleController::class, 'show']);
