@@ -1,0 +1,202 @@
+name: 'Article Management'
+description: 'APIs for Article Management.'
+endpoints:
+  -
+    httpMethods:
+      - GET
+    uri: api/articles
+    metadata:
+      groupName: 'Article Management'
+      groupDescription: 'APIs for Article Management.'
+      subgroup: ''
+      subgroupDescription: ''
+      title: |-
+        Get paginated list of articles
+        Retrieve a paginated list of articles with optional filters.
+      description: ''
+      authenticated: false
+      custom: []
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters:
+      keyword:
+        name: keyword
+        description: 'Optional search keyword.'
+        required: false
+        example: Game
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        custom: []
+      category:
+        name: category
+        description: 'Optional category filter.'
+        required: false
+        example: Technology
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        custom: []
+      source:
+        name: source
+        description: 'Optional source filter.'
+        required: false
+        example: 'New York Times'
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        custom: []
+      date:
+        name: date
+        description: 'Optional search keyword.'
+        required: false
+        example: '2024-12-26'
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        custom: []
+      page:
+        name: page
+        description: 'The page number.'
+        required: false
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        custom: []
+    cleanQueryParameters:
+      keyword: Game
+      category: Technology
+      source: 'New York Times'
+      date: '2024-12-26'
+      page: 1
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        status: 500
+        content: |-
+          {
+              "message": "Server Error"
+          }
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          access-control-allow-origin: '*'
+        description: null
+        custom: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []
+  -
+    httpMethods:
+      - GET
+    uri: 'api/articles/{id}'
+    metadata:
+      groupName: 'Article Management'
+      groupDescription: 'APIs for Article Management.'
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Get specific article by ID'
+      description: 'Retrieve the details of a specific article by its ID.'
+      authenticated: true
+      custom: []
+    headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      id:
+        name: id
+        description: 'The ID of the article.'
+        required: true
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        custom: []
+    cleanUrlParameters:
+      id: 1
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        status: 500
+        content: '{"message":"An error occurred while fetching the article"}'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          access-control-allow-origin: '*'
+        description: null
+        custom: []
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer d5a3kZv6g1bVDce4Ef8aP6h'
+    controller: null
+    method: null
+    route: null
+    custom: []
+  -
+    httpMethods:
+      - GET
+    uri: api/articles/personalized
+    metadata:
+      groupName: 'Article Management'
+      groupDescription: 'APIs for Article Management.'
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Get personalized feed'
+      description: 'Retrieve a personalized feed of articles for the authenticated user.'
+      authenticated: true
+      custom: []
+    headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        status: 500
+        content: |-
+          {
+              "message": "Server Error"
+          }
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          access-control-allow-origin: '*'
+        description: null
+        custom: []
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 8Vc4EakZ5g3aeh661fPDbvd'
+    controller: null
+    method: null
+    route: null
+    custom: []

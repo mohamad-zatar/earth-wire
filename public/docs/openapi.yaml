@@ -1,0 +1,600 @@
+openapi: 3.0.3
+info:
+  title: 'EarthWire API Documentation'
+  description: 'This document provides an overview of the API endpoints. It includes the structure, purpose, and example data for each request.'
+  version: 1.0.0
+servers:
+  -
+    url: 'http://localhost'
+paths:
+  /api/articles:
+    get:
+      summary: "Get paginated list of articles\nRetrieve a paginated list of articles with optional filters."
+      operationId: getPaginatedListOfArticlesRetrieveAPaginatedListOfArticlesWithOptionalFilters
+      description: ''
+      parameters:
+        -
+          in: query
+          name: keyword
+          description: 'Optional search keyword.'
+          example: Game
+          required: false
+          schema:
+            type: string
+            description: 'Optional search keyword.'
+            example: Game
+            nullable: false
+        -
+          in: query
+          name: category
+          description: 'Optional category filter.'
+          example: Technology
+          required: false
+          schema:
+            type: string
+            description: 'Optional category filter.'
+            example: Technology
+            nullable: false
+        -
+          in: query
+          name: source
+          description: 'Optional source filter.'
+          example: 'New York Times'
+          required: false
+          schema:
+            type: string
+            description: 'Optional source filter.'
+            example: 'New York Times'
+            nullable: false
+        -
+          in: query
+          name: date
+          description: 'Optional search keyword.'
+          example: '2024-12-26'
+          required: false
+          schema:
+            type: string
+            description: 'Optional search keyword.'
+            example: '2024-12-26'
+            nullable: false
+        -
+          in: query
+          name: page
+          description: 'The page number.'
+          example: 1
+          required: false
+          schema:
+            type: integer
+            description: 'The page number.'
+            example: 1
+            nullable: false
+      responses:
+        500:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Server Error'
+                properties:
+                  message:
+                    type: string
+                    example: 'Server Error'
+      tags:
+        - 'Article Management'
+      security: []
+  '/api/articles/{id}':
+    get:
+      summary: 'Get specific article by ID'
+      operationId: getSpecificArticleByID
+      description: 'Retrieve the details of a specific article by its ID.'
+      parameters: []
+      responses:
+        500:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'An error occurred while fetching the article'
+                properties:
+                  message:
+                    type: string
+                    example: 'An error occurred while fetching the article'
+      tags:
+        - 'Article Management'
+    parameters:
+      -
+        in: path
+        name: id
+        description: 'The ID of the article.'
+        example: 1
+        required: true
+        schema:
+          type: integer
+  /api/articles/personalized:
+    get:
+      summary: 'Get personalized feed'
+      operationId: getPersonalizedFeed
+      description: 'Retrieve a personalized feed of articles for the authenticated user.'
+      parameters: []
+      responses:
+        500:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Server Error'
+                properties:
+                  message:
+                    type: string
+                    example: 'Server Error'
+      tags:
+        - 'Article Management'
+  /api/register:
+    post:
+      summary: 'Register a new user'
+      operationId: registerANewUser
+      description: 'This endpoint allows a new user to register by providing their name, email, and password.'
+      parameters: []
+      responses: {  }
+      tags:
+        - Authentication
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: 'The name of the user.'
+                  example: 'John Doe'
+                  nullable: false
+                email:
+                  type: string
+                  description: 'The email address of the user.'
+                  example: john.doe@example.com
+                  nullable: false
+                password:
+                  type: string
+                  description: 'The password for the user account.'
+                  example: secret123
+                  nullable: false
+              required:
+                - name
+                - email
+                - password
+      security: []
+  /api/login:
+    post:
+      summary: 'Login a user'
+      operationId: loginAUser
+      description: 'This endpoint allows an existing user to log in by providing their email and password.'
+      parameters: []
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  access_token: 1|ZiYkWaM67jjYtElLk0m1OMZLGafcrqZMDRoTjpzQd61329be
+                properties:
+                  access_token:
+                    type: string
+                    example: 1|ZiYkWaM67jjYtElLk0m1OMZLGafcrqZMDRoTjpzQd61329be
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Invalid login details'
+                properties:
+                  message:
+                    type: string
+                    example: 'Invalid login details'
+      tags:
+        - Authentication
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  description: 'The email address of the user.'
+                  example: john.doe@example.com
+                  nullable: false
+                password:
+                  type: string
+                  description: 'The password for the user account.'
+                  example: secret123
+                  nullable: false
+              required:
+                - email
+                - password
+      security: []
+  /api/logout:
+    post:
+      summary: 'Logout the authenticated user'
+      operationId: logoutTheAuthenticatedUser
+      description: 'This endpoint allows an authenticated user to log out and revoke their access token.'
+      parameters: []
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Logged out successfully'
+                properties:
+                  message:
+                    type: string
+                    example: 'Logged out successfully'
+      tags:
+        - Authentication
+  /api/forgot-password:
+    post:
+      summary: 'Request a password reset code'
+      operationId: requestAPasswordResetCode
+      description: "This endpoint allows a user to request a password reset code by providing their registered email address.\nThe reset code is sent via email and expires in 10 minutes."
+      parameters: []
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Password reset code sent to your email.'
+                properties:
+                  message:
+                    type: string
+                    example: 'Password reset code sent to your email.'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'User with the given email does not exist.'
+                properties:
+                  message:
+                    type: string
+                    example: 'User with the given email does not exist.'
+      tags:
+        - 'Password Reset'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  description: 'The email address of the user.'
+                  example: john.doe@example.com
+                  nullable: false
+              required:
+                - email
+      security: []
+  /api/reset-password:
+    post:
+      summary: "Reset a user's password"
+      operationId: resetAUsersPassword
+      description: 'This endpoint allows a user to reset their password using the reset code they received via email.'
+      parameters: []
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Password has been reset successfully.'
+                properties:
+                  message:
+                    type: string
+                    example: 'Password has been reset successfully.'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  -
+                    description: ''
+                    type: object
+                    example:
+                      message: 'Invalid reset code.'
+                    properties:
+                      message:
+                        type: string
+                        example: 'Invalid reset code.'
+                  -
+                    description: ''
+                    type: object
+                    example:
+                      message: 'Reset code has expired.'
+                    properties:
+                      message:
+                        type: string
+                        example: 'Reset code has expired.'
+      tags:
+        - 'Password Reset'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  description: 'The email address of the user.'
+                  example: john.doe@example.com
+                  nullable: false
+                code:
+                  type: integer
+                  description: "The password reset code sent to the user's email."
+                  example: 123456
+                  nullable: false
+                password:
+                  type: string
+                  description: 'The new password for the account.'
+                  example: newpassword123
+                  nullable: false
+                password_confirmation:
+                  type: string
+                  description: 'The new password confirmation.'
+                  example: newpassword123
+                  nullable: false
+              required:
+                - email
+                - code
+                - password
+                - password_confirmation
+      security: []
+  /api/preferences:
+    post:
+      summary: 'Set user preferences'
+      operationId: setUserPreferences
+      description: 'This endpoint allows an authenticated user to save or update their preferences, such as preferred sources, categories, and authors.'
+      parameters: []
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Preferences saved successfully.'
+                  data:
+                    id: 1
+                    user_id: 1
+                    sources:
+                      - 'New York Times'
+                      - 'The Guardian'
+                    categories:
+                      - Technology
+                      - Health
+                    authors:
+                      - 'John Doe'
+                      - 'Jane Smith'
+                    created_at: '2024-12-27T15:36:51.000000Z'
+                    updated_at: '2024-12-27T15:37:41.000000Z'
+                properties:
+                  message:
+                    type: string
+                    example: 'Preferences saved successfully.'
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        example: 1
+                      user_id:
+                        type: integer
+                        example: 1
+                      sources:
+                        type: array
+                        example:
+                          - 'New York Times'
+                          - 'The Guardian'
+                        items:
+                          type: string
+                      categories:
+                        type: array
+                        example:
+                          - Technology
+                          - Health
+                        items:
+                          type: string
+                      authors:
+                        type: array
+                        example:
+                          - 'John Doe'
+                          - 'Jane Smith'
+                        items:
+                          type: string
+                      created_at:
+                        type: string
+                        example: '2024-12-27T15:36:51.000000Z'
+                      updated_at:
+                        type: string
+                        example: '2024-12-27T15:37:41.000000Z'
+        422:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'The given data was invalid.'
+                  errors:
+                    sources.0:
+                      - 'The sources.0 must be a string.'
+                    categories.0:
+                      - 'The categories.0 must be a string.'
+                    authors.0:
+                      - 'The authors.0 must be a string.'
+                properties:
+                  message:
+                    type: string
+                    example: 'The given data was invalid.'
+                  errors:
+                    type: object
+                    properties:
+                      sources.0:
+                        type: array
+                        example:
+                          - 'The sources.0 must be a string.'
+                        items:
+                          type: string
+                      categories.0:
+                        type: array
+                        example:
+                          - 'The categories.0 must be a string.'
+                        items:
+                          type: string
+                      authors.0:
+                        type: array
+                        example:
+                          - 'The authors.0 must be a string.'
+                        items:
+                          type: string
+      tags:
+        - 'User Preferences'
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                sources:
+                  type: array
+                  description: 'Optional. An array of preferred sources.'
+                  example:
+                    - 'New York Times'
+                    - 'The Guardian'
+                  items:
+                    type: string
+                categories:
+                  type: array
+                  description: 'Optional. An array of preferred categories.'
+                  example:
+                    - Technology
+                    - Health
+                  items:
+                    type: string
+                authors:
+                  type: array
+                  description: 'Optional. An array of preferred authors.'
+                  example:
+                    - 'John Doe'
+                    - 'Jane Smith'
+                  items:
+                    type: string
+    get:
+      summary: 'Get user preferences'
+      operationId: getUserPreferences
+      description: 'This endpoint allows an authenticated user to retrieve their saved preferences, such as preferred sources, categories, and authors.'
+      parameters: []
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  id: 1
+                  user_id: 1
+                  sources:
+                    - 'New York Times'
+                    - 'The Guardian'
+                  categories:
+                    - Technology
+                    - Health
+                  authors:
+                    - 'John Doe'
+                    - 'Jane Smith'
+                  created_at: '2024-12-27T15:36:51.000000Z'
+                  updated_at: '2024-12-27T15:37:41.000000Z'
+                properties:
+                  id:
+                    type: integer
+                    example: 1
+                  user_id:
+                    type: integer
+                    example: 1
+                  sources:
+                    type: array
+                    example:
+                      - 'New York Times'
+                      - 'The Guardian'
+                    items:
+                      type: string
+                  categories:
+                    type: array
+                    example:
+                      - Technology
+                      - Health
+                    items:
+                      type: string
+                  authors:
+                    type: array
+                    example:
+                      - 'John Doe'
+                      - 'Jane Smith'
+                    items:
+                      type: string
+                  created_at:
+                    type: string
+                    example: '2024-12-27T15:36:51.000000Z'
+                  updated_at:
+                    type: string
+                    example: '2024-12-27T15:37:41.000000Z'
+      tags:
+        - 'User Preferences'
+tags:
+  -
+    name: 'Article Management'
+    description: 'APIs for Article Management.'
+  -
+    name: Authentication
+    description: 'APIs for user authentication.'
+  -
+    name: 'Password Reset'
+    description: 'APIs for managing password resets.'
+  -
+    name: 'User Preferences'
+    description: 'APIs for managing user preferences.'
+components:
+  securitySchemes:
+    default:
+      type: http
+      scheme: bearer
+      description: 'You can retrieve your token by registering'
+security:
+  -
+    default: []

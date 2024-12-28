@@ -14,6 +14,13 @@ use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Redis;
 use Symfony\Component\HttpFoundation\Response;
 
+/**
+ * @group Article Management
+ * APIs for Article Management.
+ *
+ * @authenticated
+ * All endpoints in this group require a Sanctum Bearer token.
+ */
 class ArticleController extends Controller
 {
     protected ArticleService $articleService;
@@ -24,7 +31,18 @@ class ArticleController extends Controller
     }
 
     /**
-     * Get paginated list of articles with optional filters
+     * Get paginated list of articles
+     * Retrieve a paginated list of articles with optional filters.
+     *
+     * @unauthenticated
+     *
+     *  This endpoint does not require authentication.
+     * @queryParam page integer The page number. Example: 1
+     * @queryParam category string Optional category filter. Example: Technology
+     * @queryParam source string Optional source filter. Example: New York Times
+     * @queryParam keyword string Optional search keyword. Example: Game
+     * @queryParam date string Optional search keyword. Example: 2024-12-26
+     *
      */
     public function index(ArticleSearchRequest $request): AnonymousResourceCollection
     {
@@ -41,7 +59,12 @@ class ArticleController extends Controller
     }
 
     /**
-     * Get personalized feed for authenticated user
+     * Get personalized feed
+     *
+     * Retrieve a personalized feed of articles for the authenticated user.
+     *
+     * @authenticated
+     *  This endpoint require authentication.
      */
     public function personalizedFeed(Request $request): JsonResponse|AnonymousResourceCollection
     {
@@ -63,6 +86,10 @@ class ArticleController extends Controller
 
     /**
      * Get specific article by ID
+     *
+     * Retrieve the details of a specific article by its ID.
+     * @authenticated
+     * @urlParam id integer required The ID of the article. Example: 1
      */
     public function show(int $id): JsonResponse
     {
@@ -88,7 +115,11 @@ class ArticleController extends Controller
     }
 
     /**
-     * Generate cache key based on request parameters
+     * Generate cache key
+     *
+     * Generate a cache key based on request parameters.
+     *
+     * @hideFromAPIDocumentation
      */
     protected function generateCacheKey(array $params): string
     {

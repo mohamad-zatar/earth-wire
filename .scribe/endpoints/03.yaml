@@ -1,0 +1,201 @@
+name: 'User Preferences'
+description: 'APIs for managing user preferences.'
+endpoints:
+  -
+    httpMethods:
+      - POST
+    uri: api/preferences
+    metadata:
+      groupName: 'User Preferences'
+      groupDescription: 'APIs for managing user preferences.'
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Set user preferences'
+      description: 'This endpoint allows an authenticated user to save or update their preferences, such as preferred sources, categories, and authors.'
+      authenticated: true
+      custom: []
+    headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      sources:
+        name: sources
+        description: 'Optional. An array of preferred sources.'
+        required: false
+        example:
+          - 'New York Times'
+          - 'The Guardian'
+        type: 'string[]'
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        custom: []
+      categories:
+        name: categories
+        description: 'Optional. An array of preferred categories.'
+        required: false
+        example:
+          - Technology
+          - Health
+        type: 'string[]'
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        custom: []
+      authors:
+        name: authors
+        description: 'Optional. An array of preferred authors.'
+        required: false
+        example:
+          - 'John Doe'
+          - 'Jane Smith'
+        type: 'string[]'
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        custom: []
+      'sources.*':
+        name: 'sources.*'
+        description: 'Each source in the array.'
+        required: false
+        example: '"New York Times"'
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        custom: []
+      'categories.*':
+        name: 'categories.*'
+        description: 'Each category in the array.'
+        required: false
+        example: '"Technology"'
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        custom: []
+      'authors.*':
+        name: 'authors.*'
+        description: 'Each author in the array.'
+        required: false
+        example: '"John Doe"'
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        custom: []
+    cleanBodyParameters:
+      sources:
+        - 'New York Times'
+        - 'The Guardian'
+      categories:
+        - Technology
+        - Health
+      authors:
+        - 'John Doe'
+        - 'Jane Smith'
+    fileParameters: []
+    responses:
+      -
+        status: 200
+        content: |-
+          {
+            "message": "Preferences saved successfully.",
+            "data": {
+              "id": 1,
+              "user_id": 1,
+              "sources": ["New York Times", "The Guardian"],
+              "categories": ["Technology", "Health"],
+              "authors": ["John Doe", "Jane Smith"],
+              "created_at": "2024-12-27T15:36:51.000000Z",
+              "updated_at": "2024-12-27T15:37:41.000000Z"
+            }
+          }
+        headers: []
+        description: ''
+        custom: []
+      -
+        status: 422
+        content: |-
+          {
+            "message": "The given data was invalid.",
+            "errors": {
+              "sources.0": ["The sources.0 must be a string."],
+              "categories.0": ["The categories.0 must be a string."],
+              "authors.0": ["The authors.0 must be a string."]
+            }
+          }
+        headers: []
+        description: ''
+        custom: []
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer akh5Z61Dbdc8g4eEfP36avV'
+    controller: null
+    method: null
+    route: null
+    custom: []
+  -
+    httpMethods:
+      - GET
+    uri: api/preferences
+    metadata:
+      groupName: 'User Preferences'
+      groupDescription: 'APIs for managing user preferences.'
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Get user preferences'
+      description: 'This endpoint allows an authenticated user to retrieve their saved preferences, such as preferred sources, categories, and authors.'
+      authenticated: true
+      custom: []
+    headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        status: 200
+        content: |-
+          {
+            "id": 1,
+            "user_id": 1,
+            "sources": ["New York Times", "The Guardian"],
+            "categories": ["Technology", "Health"],
+            "authors": ["John Doe", "Jane Smith"],
+            "created_at": "2024-12-27T15:36:51.000000Z",
+            "updated_at": "2024-12-27T15:37:41.000000Z"
+          }
+        headers: []
+        description: ''
+        custom: []
+      -
+        status: 200
+        content: |-
+          []
+          If no preferences are found, the response is an empty array.
+        headers: []
+        description: ''
+        custom: []
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer v3a1ZdPkEef4c5h6b8DVga6'
+    controller: null
+    method: null
+    route: null
+    custom: []
